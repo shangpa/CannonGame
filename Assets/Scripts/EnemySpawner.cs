@@ -8,7 +8,6 @@ public class EnemySpawner : MonoBehaviour
     public float spawnRange;
     private float spawnTime;
     public float spawnInterval;
-    public GameObject explosionPrefab;
     public GameObject enemyPrefab;
     private CannonPlayer cannonPlayer;  // Reference to the CannonPlayer script
 

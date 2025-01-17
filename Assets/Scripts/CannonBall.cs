@@ -40,7 +40,16 @@ public class CannonBall : MonoBehaviour
                         foreach (RaycastHit hit in hits)
                         {
                             Vector3 explosionPosition = gameObject.transform.position;
-                            Instantiate(explosionPrefab, explosionPosition, Quaternion.identity);
+                            GameObject explosion = Instantiate(explosionPrefab, explosionPosition, Quaternion.identity);
+
+                            // 여기가 바뀐 부분: explosionPrefab에 ParticleSystem이 있을 경우,
+                            // 파티클이 끝난 후 자동으로 해당 폭발 오브젝트를 삭제하는 코드
+                            ParticleSystem explosionParticles = explosion.GetComponent<ParticleSystem>();
+                            if (explosionParticles != null)
+                            {
+                                // 파티클이 끝난 후 폭발 오브젝트를 삭제
+                                Destroy(explosion, explosionParticles.main.duration);
+                            }
                             hit.transform.SendMessage("EnemyDamageOn");
                             GameObject.FindGameObjectWithTag("Player").SendMessage("SkillGaugeUp", 0.1f);
                             
